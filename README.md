@@ -6,11 +6,11 @@ To use, add SCNotificationCenter.h/.m & SCNotificationCenterKeys.h/.m to your pr
 
 SCNotificationCenter includes equivalents to the following Growl methods:
 
-`- (void)notifyWithDictionary:(NSDictionary *)dictionary`
+`+ (void)notifyWithDictionary:(NSDictionary *)dictionary`
 
-`- (void)notifyWithTitle:(NSString *)title description:(NSString *)description notificationName:(NSString *)notifName iconData:(NSData *)iconData priority:(signed int)priority isSticky:(BOOL)isSticky clickContext:(id)clickContext;`
+`+ (void)notifyWithTitle:(NSString *)title description:(NSString *)description notificationName:(NSString *)notifName iconData:(NSData *)iconData priority:(signed int)priority isSticky:(BOOL)isSticky clickContext:(id)clickContext;`
 
-`- (void)notifyWithTitle:(NSString *)title description:(NSString *)description notificationName:(NSString *)notifName iconData:(NSData *)iconData priority:(signed int)priority isSticky:(BOOL)isSticky clickContext:(id)clickContext identifier:(NSString *)indentifier;`
+`+ (void)notifyWithTitle:(NSString *)title description:(NSString *)description notificationName:(NSString *)notifName iconData:(NSData *)iconData priority:(signed int)priority isSticky:(BOOL)isSticky clickContext:(id)clickContext identifier:(NSString *)indentifier;`
 
 So for most people's notifications, this:
 
@@ -27,7 +27,7 @@ So for most people's notifications, this:
 Will become this:
 
 ```
-[[SCNotificationCenter sharedCenter] notifyWithTitle:@"A notification"
+[SCNotificationCenter notifyWithTitle:@"A notification"
                                 description:@"A short description of the notification"
                            notificationName:@"aNotification"
                                    iconData:nil
@@ -52,7 +52,7 @@ A list of keys that can be used with the `notifyWithDictionary:` method have bee
 Just some quick examples. The not recommended way of making notifications:
 
 ```
-[[SCNotificationCenter sharedCenter] notifyWithTitle:@"Hello World"
+[SCNotificationCenter notifyWithTitle:@"Hello World"
                                          description:@"Testing"
                                     notificationName:@"A Notification"
                                             iconData:nil
@@ -64,7 +64,7 @@ Just some quick examples. The not recommended way of making notifications:
 The recommended way:
 
 ```
-[[SCNotificationCenter sharedCenter] notifyWithDictionary:@{
+[SCNotificationCenter sharedCenter notifyWithDictionary:@{
                     SCNotificationCenterNotificationName : @"A Notification",
                    SCNotificationCenterNotificationTitle : @"Hello World",
                 SCNotificationCenterNotificationSubtitle : @"Lol",
