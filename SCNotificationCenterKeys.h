@@ -23,6 +23,7 @@ extern NSString * const SCNotificationCenterNotificationHasActionButton;
 extern NSString * const SCNotificationCenterNotificationActionButtonTitle;
 extern NSString * const SCNotificationCenterNotificationDeliveryDate;
 extern NSString * const SCNotificationCenterNotificationUserInfo;
+extern NSString * const SCNotificationCenterNotificationSound;
 
 /*  ***** KEYS FOR SCNotificationCenter DICTIONARY
  "NotificationName"
@@ -86,6 +87,11 @@ extern NSString * const SCNotificationCenterNotificationUserInfo;
  "NotificationUserInfo"
  ----------------------
  An NSDictionary that contains only plist-encodable objects. The object will be made available when a notification is clicked. For NSUserNotifications, the notification's userInfo property will be set to this. For Growl notifications, the notifications clickContext will be set to this.
+ 
+ "NotificationSound"
+ -------------------
+ An NSString that is the name of a sound to be played when the notification is displayed. Only works with NSUserNotification, has no effect on Growl notifications. If you do not want to play a sound, do not add this key to your notification dictionary. 
+ 
  */
 
 @interface SCNotificationCenterKeys : NSObject

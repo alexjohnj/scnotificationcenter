@@ -41,23 +41,23 @@
            clickContext:(id)clickContext;
            
 + (void)notifyWithTitle:(NSString *)title
-           description:(NSString *)description
-      notificationName:(NSString *)notifName
-              iconData:(NSData *)iconData
-              priority:(signed int)priority
-              isSticky:(BOOL)isSticky
-          clickContext:(id)clickContext;
+            description:(NSString *)description
+       notificationName:(NSString *)notifName
+               iconData:(NSData *)iconData
+               priority:(signed int)priority
+               isSticky:(BOOL)isSticky
+           clickContext:(id)clickContext;
           
 + (void)notifyWithTitle:(NSString *)title
-           description:(NSString *)description
-      notificationName:(NSString *)notifName
-              iconData:(NSData *)iconData
-              priority:(signed int)priority
-              isSticky:(BOOL)isSticky
-          clickContext:(id)clickContext
-            identifier:(NSString *)indentifier;
+            description:(NSString *)description
+       notificationName:(NSString *)notifName
+               iconData:(NSData *)iconData
+               priority:(signed int)priority
+               isSticky:(BOOL)isSticky
+           clickContext:(id)clickContext
+             identifier:(NSString *)indentifier;
 
-@property (assign) BOOL systemNotificationCenterAvailable;
-@property (weak) id notificationCenterDelegate; //currently doesn't do anything. 
+@property (assign) BOOL systemNotificationCenterAvailable; // SCNotificationCenter automatically determines whether to use Growl or NSUserNotification but you can use this property for other things if you are so inclined. 
+@property (weak) id notificationCenterDelegate; //currently doesn't do anything.
 
 @end

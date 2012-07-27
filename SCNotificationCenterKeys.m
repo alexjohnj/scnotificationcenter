@@ -25,5 +25,6 @@ NSString * const SCNotificationCenterNotificationHasActionButton = @"Notificatio
 NSString * const SCNotificationCenterNotificationActionButtonTitle = @"NotificationActionButtonTitle";
 NSString * const SCNotificationCenterNotificationDeliveryDate = @"NotificationDeliveryDate";
 NSString * const SCNotificationCenterNotificationUserInfo = @"NotificationUserInfo";
+NSString * const SCNotificationCenterNotificationSound = @"NotificationSound";
 
 @end

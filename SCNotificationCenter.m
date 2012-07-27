@@ -154,6 +154,9 @@
 
     if(details[SCNotificationCenterNotificationSubtitle])
         notification.subtitle = details[SCNotificationCenterNotificationSubtitle];
+        
+    if(details[SCNotificationCenterNotificationSound])
+        notification.soundName = details[SCNotificationCenterNotificationSound];
 
     if(details[SCNotificationCenterNotificationHasActionButton])
         notification.hasActionButton = [details[SCNotificationCenterNotificationHasActionButton] boolValue];
