@@ -45,6 +45,10 @@
         [self displayNotificationUsingGrowlWithDetails:dictionary];
 }
 
++ (void)notifyWithDictionary:(NSDictionary *)dictionary{
+    [[self sharedCenter] notifyWithDictionary:dictionary];
+}
+
 #pragma mark - Legacy Notification Methods
 
 - (void)notifyWithTitle:(NSString *)title
@@ -100,6 +104,40 @@
         notificationDetails[SCNotificationCenterNotificationIdentifier] = indentifier;
     
     [self notifyWithDictionary:[notificationDetails copy]];
+}
+
++ (void)notifyWithTitle:(NSString *)title
+            description:(NSString *)description
+       notificationName:(NSString *)notifName
+               iconData:(NSData *)iconData
+               priority:(signed int)priority
+               isSticky:(BOOL)isSticky
+           clickContext:(id)clickContext{
+    [[self sharedCenter] notifyWithTitle:title
+                             description:description
+                        notificationName:notifName
+                                iconData:iconData
+                                priority:priority
+                                isSticky:isSticky
+                            clickContext:clickContext];
+}
+
++ (void)notifyWithTitle:(NSString *)title
+            description:(NSString *)description
+       notificationName:(NSString *)notifName
+               iconData:(NSData *)iconData
+               priority:(signed int)priority
+               isSticky:(BOOL)isSticky
+           clickContext:(id)clickContext
+             identifier:(NSString *)indentifier{
+    [[self sharedCenter] notifyWithTitle:title
+                             description:description
+                        notificationName:notifName
+                                iconData:iconData
+                                priority:priority
+                                isSticky:isSticky
+                            clickContext:clickContext
+                              identifier: indentifier];
 }
 
 #pragma mark - Private Methods
