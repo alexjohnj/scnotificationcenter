@@ -19,8 +19,8 @@
 - (void)notifyWithDictionary:(NSDictionary *)dictionary;
 
 // Legacy Methods
-// Avoid using these methods, they are here so that updating an app to use SCNotificationCenter would be easily done using a simple find and replace.
-// Try to use the notifyWithDictionary: method since this will allow you to make use of interactive notifications in notifications center while maintaining compatibility with Growl and older versions of OS X.
+// Avoid using these methods, they are here so that updating an app to use SCNotificationCenter can be easily done using a simple find and replace.
+// Try to use the notifyWithDictionary: method since this will allow you to make use of features exclusive to NSUserNotification while maintaining backwards compatibility with Growl. 
 
 - (void)notifyWithTitle:(NSString *)title
             description:(NSString *)description

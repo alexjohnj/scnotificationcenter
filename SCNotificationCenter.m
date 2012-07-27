@@ -10,18 +10,7 @@
 
 @implementation SCNotificationCenter
 
-static SCNotificationCenter *sharedNotificationCenter = nil;
-
 #pragma mark - Singleton Stuff
-
-
-+ (SCNotificationCenter *)sharedCenter
-{
-    if (sharedNotificationCenter == nil) {
-        sharedNotificationCenter = [[super allocWithZone:NULL] init];
-    }
-    return sharedNotificationCenter;
-}
 
 - (id)init{
     self = [super init];
@@ -35,6 +24,17 @@ static SCNotificationCenter *sharedNotificationCenter = nil;
     return self;
 }
 
++ (SCNotificationCenter *)sharedCenter
+{
+    static dispatch_once_t pred;
+    __strong static SCNotificationCenter *notificationCenter = nil;
+    
+    dispatch_once(&pred, ^{
+        notificationCenter = [[self alloc] init];
+    });
+    
+    return notificationCenter;
+}
 
 #pragma mark - "Modern" Notification Display Methods
 
