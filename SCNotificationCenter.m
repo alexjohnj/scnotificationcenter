@@ -55,6 +55,7 @@
 
     else {
         [[NSUserDefaults standardUserDefaults] setValue:@(preference) forKey:@"SCNotificationMethod"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [self updateNotificationMethod];
         return YES;
     }
