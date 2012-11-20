@@ -12,6 +12,12 @@
 
 @interface SCNotificationCenter : NSObject
 
+typedef enum SCNotificationMethod : NSUInteger{
+    SCNotificationCenterNotifyWithNotificationCenter = 0, // Notify exclusively using NSUserNotificationCenter
+    SCNotificationCenterNotifyWithGrowl = 1, // Notify exclusively using Growl
+    SCNotificationCenterNotifyByAvailability = 2 // Notify using whatever is available i.e. the default behaviour, NSUserNotification Center on OS 10.8 > and Growl on OS 10.7 <
+} SCNotificationMethod;
+
 + (SCNotificationCenter *)sharedCenter;
 
 // The keys for notification dictionaries can be found in SCNotificationCenterKeys.h.
@@ -19,9 +25,14 @@
 - (void)notifyWithDictionary:(NSDictionary *)dictionary;
 + (void)notifyWithDictionary:(NSDictionary *)dictionary;
 
+// Use these methods to specify what notification method to use, NSUserNotificationCenter, Growl or whichever of the two is available.
+
+- (BOOL)setNotificationMethodPreference:(SCNotificationMethod)preference;
+- (SCNotificationMethod)getNotificationMethod;
+
 // Legacy Methods
 // Avoid using these methods, they are here so that updating an app to use SCNotificationCenter can be easily done using a simple find and replace.
-// Try to use the notifyWithDictionary: method since this will allow you to make use of features exclusive to NSUserNotification while maintaining backwards compatibility with Growl. 
+// Try to use the notifyWithDictionary: method since this will allow you to make use of features exclusive to NSUserNotification while maintaining backwards compatibility with Growl.
 
 - (void)notifyWithTitle:(NSString *)title
             description:(NSString *)description
@@ -39,7 +50,7 @@
                priority:(signed int)priority
                isSticky:(BOOL)isSticky
            clickContext:(id)clickContext;
-           
+
 + (void)notifyWithTitle:(NSString *)title
             description:(NSString *)description
        notificationName:(NSString *)notifName
@@ -47,7 +58,7 @@
                priority:(signed int)priority
                isSticky:(BOOL)isSticky
            clickContext:(id)clickContext;
-          
+
 + (void)notifyWithTitle:(NSString *)title
             description:(NSString *)description
        notificationName:(NSString *)notifName
@@ -57,7 +68,8 @@
            clickContext:(id)clickContext
              identifier:(NSString *)indentifier;
 
-@property (assign) BOOL systemNotificationCenterAvailable; // SCNotificationCenter automatically determines whether to use Growl or NSUserNotification but you can use this property for other things if you are so inclined. 
+@property (assign) BOOL systemNotificationCenterAvailable; // SCNotificationCenter automatically determines whether to use Growl or NSUserNotification but you can use this property for other things if you are so inclined.
+@property (assign) BOOL useSystemNotificationCenter;
 @property (weak) id notificationCenterDelegate; //currently doesn't do anything.
 
 @end
