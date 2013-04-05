@@ -11,9 +11,9 @@
 
 #pragma mark - Singleton Stuff
 
-- (id)init{
+- (id)init {
     self = [super init];
-    if(self){
+    if (self) {
         Class notificationCenterClass = NSClassFromString(@"NSUserNotificationCenter");
             if(!notificationCenterClass)
                 _systemNotificationCenterAvailable = NO;
@@ -43,16 +43,15 @@
 #pragma mark - Notification Method Preferences
 
 - (BOOL)setNotificationMethodPreference:(SCNotificationMethod)preference {
-    if (preference == SCNotificationCenterNotifyWithNotificationCenter && !self.systemNotificationCenterAvailable){
+    if (preference == SCNotificationCenterNotifyWithNotificationCenter && !self.systemNotificationCenterAvailable) {
         NSLog(@"SCNotificatioNCenter: Attempted to enable NSUserNotificationCenter notifications but this system doesn't support them. Will continue to use Growl notifications.");
         return NO;
     }
+
     if (preference < SCNotificationCenterNotifyWithNotificationCenter || preference > SCNotificationCenterNotifyByAvailability) {
         NSLog(@"SCNotificationCenter: The provided notification method is invalid.");
         return NO;
-    }
-
-    else {
+    } else {
         [[NSUserDefaults standardUserDefaults] setValue:@(preference) forKey:@"SCNotificationMethod"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self updateNotificationMethod];
@@ -66,14 +65,15 @@
 
 #pragma mark - "Modern" Notification Display Methods
 
-- (void)notifyWithDictionary:(NSDictionary *)dictionary{
-    if(self.useSystemNotificationCenter)
+- (void)notifyWithDictionary:(NSDictionary *)dictionary {
+    if (self.useSystemNotificationCenter) {
         [self displayNotificationUsingNotificationCenterWithDetails:dictionary];
-    else
+    } else {
         [self displayNotificationUsingGrowlWithDetails:dictionary];
+    }
 }
 
-+ (void)notifyWithDictionary:(NSDictionary *)dictionary{
++ (void)notifyWithDictionary:(NSDictionary *)dictionary {
     [[self sharedCenter] notifyWithDictionary:dictionary];
 }
 
@@ -85,24 +85,25 @@
                iconData:(NSData *)iconData
                priority:(signed int)priority
                isSticky:(BOOL)isSticky
-           clickContext:(id)clickContext{
+           clickContext:(id)clickContext {
     NSMutableDictionary *notificationDetails = [[NSMutableDictionary alloc] init];
-    if(title)
+
+    if (title)
         notificationDetails[SCNotificationCenterNotificationTitle] = title;
-    if(description)
+    if (description)
         notificationDetails[SCNotificationCenterNotificationDescription] = description;
-    if(notifName)
+    if (notifName)
         notificationDetails[SCNotificationCenterNotificationName] = notifName;
-    if(iconData)
+    if (iconData)
         notificationDetails[SCNotificationCenterNotificationIcon] = iconData;
 
     notificationDetails[SCNotificationCenterNotificationPriority] = @(priority);
     notificationDetails[SCNotificationCenterNotificationSticky] = @(isSticky);
-    if(clickContext)
+
+    if (clickContext)
         notificationDetails[SCNotificationCenterNotificationClickContext] = clickContext;
 
     [self notifyWithDictionary:[notificationDetails copy]];
-
 }
 
 - (void)notifyWithTitle:(NSString *)title
@@ -112,23 +113,25 @@
                priority:(signed int)priority
                isSticky:(BOOL)isSticky
            clickContext:(id)clickContext
-             identifier:(NSString *)indentifier{
+             identifier:(NSString *)indentifier {
 
     NSMutableDictionary *notificationDetails = [[NSMutableDictionary alloc] init];
-    if(title)
+
+    if (title)
         notificationDetails[SCNotificationCenterNotificationTitle] = title;
-    if(description)
+    if (description)
         notificationDetails[SCNotificationCenterNotificationDescription] = description;
-    if(notifName)
+    if (notifName)
         notificationDetails[SCNotificationCenterNotificationName] = notifName;
-    if(iconData)
+    if (iconData)
         notificationDetails[SCNotificationCenterNotificationIcon] = iconData;
 
     notificationDetails[SCNotificationCenterNotificationPriority] = @(priority);
     notificationDetails[SCNotificationCenterNotificationSticky] = @(isSticky);
-    if(clickContext)
+
+    if (clickContext)
         notificationDetails[SCNotificationCenterNotificationClickContext] = clickContext;
-    if(indentifier)
+    if (indentifier)
         notificationDetails[SCNotificationCenterNotificationIdentifier] = indentifier;
 
     [self notifyWithDictionary:[notificationDetails copy]];
@@ -140,7 +143,7 @@
                iconData:(NSData *)iconData
                priority:(signed int)priority
                isSticky:(BOOL)isSticky
-           clickContext:(id)clickContext{
+           clickContext:(id)clickContext {
     [[self sharedCenter] notifyWithTitle:title
                              description:description
                         notificationName:notifName
@@ -157,7 +160,7 @@
                priority:(signed int)priority
                isSticky:(BOOL)isSticky
            clickContext:(id)clickContext
-             identifier:(NSString *)indentifier{
+             identifier:(NSString *)indentifier {
     [[self sharedCenter] notifyWithTitle:title
                              description:description
                         notificationName:notifName
@@ -170,29 +173,29 @@
 
 #pragma mark - Private Methods
 
-- (void)displayNotificationUsingNotificationCenterWithDetails:(NSDictionary *)details{
+- (void)displayNotificationUsingNotificationCenterWithDetails:(NSDictionary *)details {
     BOOL scheduledNotification = NO;
-
     NSUserNotification *notification = [[NSUserNotification alloc] init];
-    if(details[SCNotificationCenterNotificationTitle])
+
+    if (details[SCNotificationCenterNotificationTitle])
         notification.title = details[SCNotificationCenterNotificationTitle];
 
-    if(details[SCNotificationCenterNotificationDescription])
+    if (details[SCNotificationCenterNotificationDescription])
         notification.informativeText = details[SCNotificationCenterNotificationDescription];
 
-    if(details[SCNotificationCenterNotificationSubtitle])
+    if (details[SCNotificationCenterNotificationSubtitle])
         notification.subtitle = details[SCNotificationCenterNotificationSubtitle];
 
-    if(details[SCNotificationCenterNotificationSound])
+    if( details[SCNotificationCenterNotificationSound])
         notification.soundName = details[SCNotificationCenterNotificationSound];
 
-    if(details[SCNotificationCenterNotificationHasActionButton])
+    if (details[SCNotificationCenterNotificationHasActionButton])
         notification.hasActionButton = [details[SCNotificationCenterNotificationHasActionButton] boolValue];
 
-    if(details[SCNotificationCenterNotificationActionButtonTitle])
+    if (details[SCNotificationCenterNotificationActionButtonTitle])
         notification.actionButtonTitle = details[SCNotificationCenterNotificationActionButtonTitle];
 
-    if(details[SCNotificationCenterNotificationDeliveryDate]){
+    if (details[SCNotificationCenterNotificationDeliveryDate]) {
         notification.deliveryDate = details[SCNotificationCenterNotificationDeliveryDate];
         scheduledNotification = YES;
     }
@@ -200,51 +203,51 @@
     // Build the userInfo dictionary.
     NSMutableDictionary *userInfo;
 
-    if(!details[SCNotificationCenterNotificationUserInfo]){
+    if (!details[SCNotificationCenterNotificationUserInfo]) {
         userInfo = [[NSMutableDictionary alloc] init];
-    }
-    else{
+    } else {
         userInfo = [details[SCNotificationCenterNotificationUserInfo] mutableCopy];
     }
 
-    if(details[SCNotificationCenterNotificationClickContext])
+    if (details[SCNotificationCenterNotificationClickContext])
         userInfo[SCNotificationCenterNotificationClickContext] = details[SCNotificationCenterNotificationClickContext];
 
-    if(details[SCNotificationCenterNotificationIdentifier])
+    if (details[SCNotificationCenterNotificationIdentifier]) {
         userInfo[SCNotificationCenterGrowlNotificationIdentifier] = details[SCNotificationCenterNotificationIdentifier];
-
-    else if(details[SCNotificationCenterGrowlNotificationIdentifier])
+    } else if (details[SCNotificationCenterGrowlNotificationIdentifier]) {
         userInfo[SCNotificationCenterGrowlNotificationIdentifier] = details[SCNotificationCenterGrowlNotificationIdentifier];
+    }
 
     notification.userInfo = [userInfo copy];
 
-    if(scheduledNotification)
+    if (scheduledNotification) {
         [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:notification];
-    else
+    } else {
         [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    }
 }
 
-- (void)displayNotificationUsingGrowlWithDetails:(NSDictionary *)details{
-    if(!details[SCNotificationCenterNotificationClickContext] && details[SCNotificationCenterNotificationUserInfo]){
+- (void)displayNotificationUsingGrowlWithDetails:(NSDictionary *)details {
+    if (!details[SCNotificationCenterNotificationClickContext] && details[SCNotificationCenterNotificationUserInfo]) {
         NSMutableDictionary *newDetails = [details mutableCopy];
         [newDetails setValue:details[SCNotificationCenterNotificationUserInfo] forKey:SCNotificationCenterNotificationClickContext];
         [GrowlApplicationBridge notifyWithDictionary:newDetails];
-    }
-    else{
+    } else {
         [GrowlApplicationBridge notifyWithDictionary:details];
     }
 }
 
 // This method automatically gets called when you change the notification method using setNotificationMethodPreference: Don't bother calling this method otherwise, hence why it's private.
 - (void)updateNotificationMethod {
-    if ([self getNotificationMethod] == SCNotificationCenterNotifyWithNotificationCenter && self.systemNotificationCenterAvailable)
+    if ([self getNotificationMethod] == SCNotificationCenterNotifyWithNotificationCenter && self.systemNotificationCenterAvailable) {
         self.useSystemNotificationCenter = YES;
-    else if ([self getNotificationMethod] == SCNotificationCenterNotifyWithNotificationCenter && !self.systemNotificationCenterAvailable)
+    } else if ([self getNotificationMethod] == SCNotificationCenterNotifyWithNotificationCenter && !self.systemNotificationCenterAvailable) {
         self.useSystemNotificationCenter = NO;
-    else if ([self getNotificationMethod] == SCNotificationCenterNotifyWithGrowl)
+    } else if ([self getNotificationMethod] == SCNotificationCenterNotifyWithGrowl) {
         self.useSystemNotificationCenter = NO;
-    else if ([self getNotificationMethod] == SCNotificationCenterNotifyByAvailability)
+    } else if ([self getNotificationMethod] == SCNotificationCenterNotifyByAvailability) {
         self.useSystemNotificationCenter = self.systemNotificationCenterAvailable;
+    }
 }
 
 #pragma mark - NSUserDefaults Crap
