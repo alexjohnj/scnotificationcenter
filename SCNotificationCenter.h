@@ -67,7 +67,7 @@ typedef enum SCNotificationMethod : NSUInteger{
            clickContext:(id)clickContext
              identifier:(NSString *)indentifier;
 
-@property (assign) BOOL systemNotificationCenterAvailable; // SCNotificationCenter automatically determines whether to use Growl or NSUserNotification but you can use this property for other things if you are so inclined.
+@property (readonly, assign) BOOL systemNotificationCenterAvailable; // SCNotificationCenter automatically determines whether to use Growl or NSUserNotification but you can use this property for other things if you are so inclined.
 @property (assign) BOOL useSystemNotificationCenter;
 @property (weak) id notificationCenterDelegate; //currently doesn't do anything.
 
