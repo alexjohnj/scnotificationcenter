@@ -1,99 +1,55 @@
 //
 //  SCNotificationCenterKeys.h
-//  SymSteam
 //
 //  Created by Alex Jackson on 26/07/2012.
-//
+//  Licensed under the Creative Commons Attribution 3.0 Unported License. http://creativecommons.org/licenses/by/3.0/
 //
 
 #import <Foundation/Foundation.h>
 
+//  A human readable name for the notification that must be declared in the Growl notification dictionary. You must add this key in order for the notification to work with Growl. Has no effect with NSUserNotificationCenter.
 extern NSString * const SCNotificationCenterNotificationName;
+
+// A title displayed in the notification. The same as Growl's `NotificationName` key and the same as NSUserNotification's `title` property.
 extern NSString * const SCNotificationCenterNotificationTitle;
+
+// A description displayed in the notification. The same as Growl's `NotificationDescription` key and the same as NSUserNotification's `informativeText` property.
 extern NSString * const SCNotificationCenterNotificationDescription;
+
+// An NSData object displayed as an icon with a Growl notification. The same as Growl's `NotificationIcon` key. There's no equivalent for NSUserNotificationCenter and it will be ignored.
 extern NSString * const SCNotificationCenterNotificationIcon;
+
+// Pretty much the same as above. The equivalent to Growl's `NotificationAppIcon` key.
 extern NSString * const SCNotificationCenterNotificationAppIcon;
+
+// An integer between -2 & 2 indicating the priority of the notification. The same as Growl's `NotificationPriority` key. There's no equivalent for NSUserNotificationCenter and it will be ignored. 
 extern NSString * const SCNotificationCenterNotificationPriority;
+
+// A boolean indicating if the notification should disappear after a certain amount of time. The same as Growl's `NotificationSticky` key. No equivalent for NSUserNotificationCenter and it will be ignored.
 extern NSString * const SCNotificationCenterNotificationSticky;
+
+// A plist-encodable object that is unique to a notification and is provided as a parameter in Growl notification callbacks. The same as Growl's `NotificationClickContext`. For NSUserNotifications, it will be placed in the userInfo dictionary under the same key.
+// The object MUST be plist-encodable because NSUserNotification's userInfo dictionary must be. If it isn't, an exception will be thrown. In addition, the object must be < 1k in size otherwise an exception will be thrown.
 extern NSString * const SCNotificationCenterNotificationClickContext;
+
+//  An identifier for the notification. Must be a string. The same as `GrowlNotificationIdentifier` for Growl. For NSUserNotifications it will be placed in the userInfo dictionary under the key `GrowlNotificationIdentifier`.
 extern NSString * const SCNotificationCenterNotificationIdentifier;
 extern NSString * const SCNotificationCenterGrowlNotificationIdentifier;
+
+// A subtitle displayed with the notification. Used as NSUserNotification's `subtitle` property. There's no equivalent in Growl so this key will be ignored.
 extern NSString * const SCNotificationCenterNotificationSubtitle;
+
+// Boolean value indicating if the notification has an action button attached to it. Only available with NSUserNotifications. Will be ignored by Growl.
 extern NSString * const SCNotificationCenterNotificationHasActionButton;
+
+// A title for an action button on a notification. Only available with NSUserNotifications. Will be ignored by Growl.
 extern NSString * const SCNotificationCenterNotificationActionButtonTitle;
+
+// An NSDate indicating when the notification should be displayed. Sets the `deliveryDate` property for NSUserNotifications. There's no equivalent for Growl so it's ignored.
 extern NSString * const SCNotificationCenterNotificationDeliveryDate;
+
+// An NSDictionary containing plist-encodable objects that is attached to a notification. The object is made available in notification callbacks. For NSUserNotifications, the dictionary is assigned to the `userInfo` property. For Growl, the dictionary is assigned to the notification's `clickContext`.
 extern NSString * const SCNotificationCenterNotificationUserInfo;
+
+// An NSString that is the name of a sound that is played when the notification is displayed. Used as NSUserNotification's `soundName` key. Ignored by Growl. 
 extern NSString * const SCNotificationCenterNotificationSound;
-
-/*  ***** KEYS FOR SCNotificationCenter DICTIONARY
- "NotificationName"
- ------------------
- A human readable name for the notification that must be declared in the Growl notification dictionary. Has no use with NSUserNotification. Required for Growl notifications.
- 
- "NotificationTitle"
- -------------------
- The title of the notification. The same as Growl's "NotificationName" key and the same as NSUserNotification's title property.
- 
- "NotificationDescription"
- -------------------------
- A description displayed with the notification. The same as Growl's "NotificationDescription" key and the same as NSUserNotification's informativeText property.
- 
- "NotificationIcon"
- ------------------
- An NSData object displayed with a Growl notification. The same as Growl's "NotificationIcon" key. There's no equivalent for NSUserNotification and it will be ignored.
- 
- "NotificationAppIcon"
- ---------------------
- Same as above (pretty much) see Growl docs for more information. The same as Growl's "NotificationAppIcon" key. Not available for NSUserNotification.
- 
- "NotificationPriority"
- ----------------------
- An (NSNumber) integer between -2 & 2. The same as Growl's "NotificationPriority" key. No equivalent for NSUserNotification.
- 
- "NotificationSticky"
- --------------------
- An (NSNumber) bool indicating if the notification should automatically disappear. The same as Growl's "NotificationSticky". No equivalent for NSUserNotification.
- 
- "NotificationClickContext"
- --------------------------
- A plist-encodable object that is unique to a notification and is given back to you in a notification clicked delegate method. The same as Growl's "NotificationClickContext".
- 
- For NSUserNotification's, the clickContext will be placed inside a userInfo dictionary under the key "NotificationClickContext". When using this with NSUserNotification, be sure that the clickContext is still plist encodable and that the object passed is less than 1KB in size.
- 
- "NotificationIdentifier"
- ------------------------
- An identifier for the notification. Must be a string. The same as "GrowlNotificationIdentifier" for Growl. Will be placed in a dictionary under the key "GrowlNotificationIdentifier" for NSUserNotification and provided in the notification's userInfo property.
- 
- "GrowlNotificationIdentifier"
- -----------------------------
- ^^ The same as above.
- 
- "NotificationSubtitle"
- ----------------------
- A subtitle for the notification. No equivalent for Growl and so will do nothing. Used as an NSUserNotification's subtitle property.
- 
- "NotificationHasActionButton"
- -----------------------------
- Boolean value. Provides an action button for the notification. No equivalent for Growl. NSUserNotification only.
- 
- "NotificationActionButtonTitle"
- -------------------------------
- A title for an action button. No equivalent for Growl. NSUserNotification only.
- 
- "NotificationDeliveryDate"
- -------------------------
- An NSDate that dictates when the notification should be displayed. No equivalent for Growl (yet). Sets the deliveryDate property for an NSUserNotification.
- 
- "NotificationUserInfo"
- ----------------------
- An NSDictionary that contains only plist-encodable objects. The object will be made available when a notification is clicked. For NSUserNotifications, the notification's userInfo property will be set to this. For Growl notifications, the notifications clickContext will be set to this.
- 
- "NotificationSound"
- -------------------
- An NSString that is the name of a sound to be played when the notification is displayed. Only works with NSUserNotification, has no effect on Growl notifications. If you do not want to play a sound, do not add this key to your notification dictionary. 
- 
- */
-
-@interface SCNotificationCenterKeys : NSObject
-
-@end

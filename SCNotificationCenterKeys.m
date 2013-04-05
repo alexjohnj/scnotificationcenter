@@ -1,14 +1,11 @@
 //
 //  SCNotificationCenterKeys.m
-//  SymSteam
 //
 //  Created by Alex Jackson on 26/07/2012.
-//
+//  Licensed under the Creative Commons Attribution 3.0 Unported License. http://creativecommons.org/licenses/by/3.0/
 //
 
 #import "SCNotificationCenterKeys.h"
-
-@implementation SCNotificationCenterKeys
 
 NSString * const SCNotificationCenterNotificationName = @"NotificationName";
 NSString * const SCNotificationCenterNotificationTitle = @"NotificationTitle";
@@ -26,5 +23,3 @@ NSString * const SCNotificationCenterNotificationActionButtonTitle = @"Notificat
 NSString * const SCNotificationCenterNotificationDeliveryDate = @"NotificationDeliveryDate";
 NSString * const SCNotificationCenterNotificationUserInfo = @"NotificationUserInfo";
 NSString * const SCNotificationCenterNotificationSound = @"NotificationSound";
-
-@end

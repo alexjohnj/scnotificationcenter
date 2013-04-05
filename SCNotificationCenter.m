@@ -1,9 +1,8 @@
 //
 //  SCNotificationCenter.m
-//  SymSteam
 //
 //  Created by Alex Jackson on 26/07/2012.
-//
+//  Licensed under the Creative Commons Attribution 3.0 Unported License. http://creativecommons.org/licenses/by/3.0/
 //
 
 #import "SCNotificationCenter.h"
